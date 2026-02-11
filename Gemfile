@@ -50,6 +50,10 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Ruby LSP for VS Code intellisense
+  gem "ruby-lsp"
+  gem "ruby-lsp-rails"
 end
 
 group :test do
