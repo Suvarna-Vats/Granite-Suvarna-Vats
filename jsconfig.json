@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["app/javascript/src/*"],
+      "apis/*": ["app/javascript/src/apis/*"],
+      "common/*": ["app/javascript/src/common/*"],
+      "components/*": ["app/javascript/src/components/*"],
+      "assets/*": ["app/assets/*"],
+      "images/*": ["app/assets/images/*"]
+    },
+    "jsx": "react"
+  },
+  "include": ["app/javascript/**/*"],
+  "exclude": ["node_modules"]
+}
