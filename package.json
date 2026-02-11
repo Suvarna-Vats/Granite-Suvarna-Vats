@@ -1,12 +1,51 @@
 {
+  "lint-staged": {
+    "app/**/*.{js,jsx,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "{package.json,.eslintrc.js,.prettierrc.js}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    ".eslint-rules/**/*": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "./**/*.rb": [
+      "bundle exec rubocop -a --force-exclusion"
+    ],
+    "{Gemfile,Rakefile,config.ru}": [
+      "bundle exec rubocop -a --force-exclusion"
+    ],
+    "app/views/**/*.html.erb": [
+      "bundle exec erblint --lint-all --format compact -a"
+    ]
+  },
   "name": "app",
   "private": true,
   "devDependencies": {
-    "esbuild": "^0.27.3"
+    "@babel/eslint-parser": "7.17.0",
+    "esbuild": "^0.27.3",
+    "eslint": "8.12.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-jam3": "0.2.3",
+    "eslint-plugin-json": "3.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-react": "7.29.4",
+    "eslint-plugin-react-hooks": "4.4.0",
+    "eslint-plugin-unused-imports": "2.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "12.3.7",
+    "prettier": "^2.6.1",
+    "prettier-plugin-tailwindcss": "^0.1.8"
   },
   "scripts": {
     "build": "node esbuild.config.js",
-    "dev": "vite"
+    "dev": "vite",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@babel/core": "^7.19.1",
