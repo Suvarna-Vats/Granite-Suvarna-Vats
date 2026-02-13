@@ -8,7 +8,18 @@ class TasksController < ApplicationController
 
   def show
     task = Task.find_by(slug: params[:slug])
-    render status: :ok, json: { task: } if task
-    render status: :not_found, json: { error: "Task not found" } unless task
+    render_notice("Task was successfully found!", :ok, task:) if task
   end
+
+  def create
+    task = Task.new(task_params)
+    task.save!
+    render_notice(t("successfully_created"))
+  end
+
+  private
+
+    def task_params
+      params.require(:task).permit(:title)
+    end
 end
