@@ -22,6 +22,15 @@ const Dashboard = ({ history }) => {
     }
   };
 
+  const destroyTask = async slug => {
+    try {
+      await tasksApi.destroy(slug);
+      await fetchTasks();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   const showTask = slug => {
     history.push(`/tasks/${slug}/show`);
   };
@@ -52,7 +61,7 @@ const Dashboard = ({ history }) => {
     <Container>
       <div className="flex flex-col gap-y-8">
         <PageTitle title="Todo list" />
-        <Table data={tasks} showTask={showTask} />
+        <Table data={tasks} destroyTask={destroyTask} showTask={showTask} />
       </div>
     </Container>
   );

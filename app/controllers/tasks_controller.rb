@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :load_task, only: %i[ show update ]
+  before_action :load_task, only: %i[ show update destroy ]
 
   def index
     tasks = Task.all
@@ -21,6 +21,11 @@ class TasksController < ApplicationController
   def update
     @task.update!(task_params)
     render_notice(t("successfully_updated"))
+  end
+
+  def destroy
+    @task.destroy!
+    render_json
   end
 
   private

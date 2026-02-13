@@ -3,7 +3,7 @@ import React from "react";
 import { Tooltip } from "components/commons";
 import PropTypes from "prop-types";
 
-const Row = ({ data, showTask }) => (
+const Row = ({ data, showTask, destroyTask }) => (
   <tbody className="divide-y divide-gray-200 bg-white">
     {data.map(rowData => (
       <tr key={rowData.id}>
@@ -17,6 +17,18 @@ const Row = ({ data, showTask }) => (
             Show
           </a>
         </td>
+        <td
+          className="cursor-pointer px-6 py-4 text-right
+            text-sm font-medium leading-5"
+        >
+          <a
+            className="text-red-500
+              hover:text-red-700"
+            onClick={() => destroyTask(rowData.slug)}
+          >
+            Delete
+          </a>
+        </td>
       </tr>
     ))}
   </tbody>
@@ -24,6 +36,7 @@ const Row = ({ data, showTask }) => (
 
 Row.propTypes = {
   data: PropTypes.array.isRequired,
+  destroyTask: PropTypes.func,
   showTask: PropTypes.func,
 };
 
