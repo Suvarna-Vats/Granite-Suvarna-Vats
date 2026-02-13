@@ -7,8 +7,8 @@ class TasksController < ApplicationController
   end
 
   def show
-    task = Task.find_by(slug: params[:slug])
-    render_notice("Task was successfully found!", :ok, task:) if task
+    task = Task.find_by!(slug: params[:slug])
+    render_json({ task: })
   end
 
   def create
