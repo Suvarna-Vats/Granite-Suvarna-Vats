@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 
 import authApi from "apis/auth";
-import SignupForm from "components/Authentication/Form/Signup";
+import { setAuthHeaders } from "apis/axios";
+import LoginForm from "components/Authentication/Form/Login";
+import { setToLocalStorage } from "utils/storage";
 
-const Signup = ({ history }) => {
-  const [name, setName] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async event => {
     event.preventDefault();
     setLoading(true);
     try {
-      await authApi.signup({
-        name,
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
+      const response = await authApi.login({ email, password });
+      setToLocalStorage({
+        authToken: response.data.authentication_token,
+        email: email.toLowerCase(),
+        userId: response.data.id,
+        userName: response.data.name,
       });
-      setLoading(false);
-      history.push("/");
+      setAuthHeaders();
+      window.location.href = "/";
     } catch (error) {
       logger.error(error);
       setLoading(false);
@@ -29,15 +30,13 @@ const Signup = ({ history }) => {
   };
 
   return (
-    <SignupForm
+    <LoginForm
       handleSubmit={handleSubmit}
       loading={loading}
       setEmail={setEmail}
-      setName={setName}
       setPassword={setPassword}
-      setPasswordConfirmation={setPasswordConfirmation}
     />
   );
 };
 
-export default Signup;
+export default Login;

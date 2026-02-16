@@ -68,7 +68,7 @@ const Form = ({
         <Button
           buttonText="Cancel"
           style="secondary"
-          onClick={() => history.push("/dashboard")}
+          onClick={() => history.push("/")}
         />
       </div>
     </form>
