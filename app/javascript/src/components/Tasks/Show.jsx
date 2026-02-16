@@ -8,6 +8,7 @@ const Show = () => {
   const [task, setTask] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
   const { slug } = useParams();
+
   const history = useHistory();
 
   const updateTask = () => {
@@ -48,13 +49,15 @@ const Show = () => {
               </p>
             </div>
           </div>
-          <Button
-            buttonText="Edit"
-            icon="edit-line"
-            size="small"
-            style="secondary"
-            onClick={updateTask}
-          />
+          <div className="flex items-center justify-end gap-x-3">
+            <Button
+              buttonText="Edit"
+              icon="edit-line"
+              size="small"
+              style="secondary"
+              onClick={updateTask}
+            />
+          </div>
         </div>
       </div>
     </Container>

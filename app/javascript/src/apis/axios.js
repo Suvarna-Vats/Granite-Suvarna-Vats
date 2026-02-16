@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Toastr } from "components/commons";
-import { setToLocalStorage, getFromLocalStorage } from "utils/storage";
+import { setToLocalStorage } from "utils/storage";
 
 const DEFAULT_ERROR_NOTIFICATION = "Something went wrong!";
 
@@ -14,8 +14,8 @@ const setAuthHeaders = () => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
-  const token = getFromLocalStorage("authToken");
-  const email = getFromLocalStorage("authEmail");
+  const token = localStorage.getItem("authToken");
+  const email = localStorage.getItem("authEmail");
   if (token && email) {
     axios.defaults.headers["X-Auth-Email"] = email;
     axios.defaults.headers["X-Auth-Token"] = token;

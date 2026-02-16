@@ -85,7 +85,6 @@ const Edit = ({ history }) => {
           setTitle={setTitle}
           setUserId={setUserId}
           title={title}
-          userId={userId}
           users={users}
         />
       </div>
