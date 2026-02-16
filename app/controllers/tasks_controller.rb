@@ -25,7 +25,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy!
-    render_json
+    render_notice(t("successfully_deleted"))
   end
 
   private
