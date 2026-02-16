@@ -68,6 +68,6 @@ group :test do
 end
 
 gem "bcrypt", "~> 3.1.13"
-gem "connection_pool", "~> 2.4"
+gem "connection_pool", "~> 3.0"
 gem "data_migrate"
 gem "react-rails", "~> 2.7.1"
