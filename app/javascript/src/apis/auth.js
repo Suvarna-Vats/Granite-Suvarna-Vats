@@ -10,9 +10,12 @@ const signup = payload =>
     user: payload,
   });
 
+const logout = () => axios.delete("/session");
+
 const authApi = {
   login,
   signup,
+  logout,
 };
 
 export default authApi;
