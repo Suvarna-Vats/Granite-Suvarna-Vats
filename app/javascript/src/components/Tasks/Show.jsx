@@ -47,6 +47,10 @@ const Show = () => {
                 <span className="font-semibold">Assigned to: </span>
                 {task?.assigned_user?.name}
               </p>
+              <p className="text-base text-gray-700">
+                <span className="font-semibold">Created by: </span>
+                {task?.task_owner?.name}
+              </p>
             </div>
           </div>
           <div className="flex items-center justify-end gap-x-3">
