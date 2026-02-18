@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
   protect_from_forgery
   before_action :authenticate_user_using_x_auth_token
 
