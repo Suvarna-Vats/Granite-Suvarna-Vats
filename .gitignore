@@ -104,3 +104,4 @@ dump.rdb
 /app/assets/builds
 
 package-lock.json
+coverage
