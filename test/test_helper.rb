@@ -22,7 +22,8 @@ require "rails/test_help"
 
 module ActiveSupport
   class TestCase
-    # Run tests in parallel with specified workers
+    # Run tests in parallel with specified workers\
+    include FactoryBot::Syntax::Methods
     parallelize(workers: :number_of_processors) unless ENV["COVERAGE"]
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
