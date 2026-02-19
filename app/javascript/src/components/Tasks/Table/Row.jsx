@@ -10,6 +10,7 @@ const Row = ({
   destroyTask,
   showTask,
   handleProgressToggle,
+  starTask,
 }) => {
   const isCompleted = type === "completed";
   const toggledProgress = isCompleted ? "pending" : "completed";
@@ -52,9 +53,28 @@ const Row = ({
             </Tooltip>
           </td>
           {!isCompleted && (
-            <td className="whitespace-no-wrap border-r border-gray-300 px-4 py-2.5 text-sm text-gray-800">
-              {rowData.assigned_user.name}
-            </td>
+            <>
+              <td className="whitespace-no-wrap border-r border-gray-300 px-4 py-2.5 text-sm text-gray-800">
+                {rowData.assigned_user.name}
+              </td>
+              <td className="cursor-pointer px-4 py-2.5 text-center">
+                <button onClick={() => starTask(rowData.slug, rowData.status)}>
+                  <i
+                    className={classnames(
+                      "text-2xl transition duration-300 ease-in-out hover:text-yellow-600",
+                      {
+                        "ri-star-line text-gray-400":
+                          rowData.status !== "starred",
+                      },
+                      {
+                        "ri-star-fill text-yellow-500":
+                          rowData.status === "starred",
+                      }
+                    )}
+                  />
+                </button>
+              </td>
+            </>
           )}
           {isCompleted && (
             <td className="cursor-pointer px-4 py-2.5 text-center">
@@ -77,6 +97,7 @@ Row.propTypes = {
   destroyTask: PropTypes.func,
   showTask: PropTypes.func,
   handleProgressToggle: PropTypes.func,
+  starTask: PropTypes.func,
 };
 
 export default Row;

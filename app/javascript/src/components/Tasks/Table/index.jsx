@@ -9,6 +9,7 @@ const Table = ({
   destroyTask,
   showTask,
   handleProgressToggle,
+  starTask,
 }) => (
   <div className="inline-block min-w-full">
     <table className="min-w-full border-collapse border border-gray-300">
@@ -18,6 +19,7 @@ const Table = ({
         destroyTask={destroyTask}
         handleProgressToggle={handleProgressToggle}
         showTask={showTask}
+        starTask={starTask}
         type={type}
       />
     </table>
