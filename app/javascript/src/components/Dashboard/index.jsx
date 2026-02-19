@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 
 import tasksApi from "apis/tasks";
-import { PageLoader, PageTitle, Container } from "components/commons";
+import { Container, PageLoader, PageTitle } from "components/commons";
 import Table from "components/Tasks/Table";
-import { isNil, isEmpty, either } from "ramda";
+import { all, isNil, isEmpty, either } from "ramda";
 
 const Dashboard = ({ history }) => {
-  const [tasks, setTasks] = useState([]);
+  const [pendingTasks, setPendingTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchTasks = async () => {
     try {
       const {
-        data: { tasks },
+        data: {
+          tasks: { pending, completed },
+        },
       } = await tasksApi.fetch();
-      setTasks(tasks);
+      setPendingTasks(pending);
+      setCompletedTasks(completed);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -24,10 +28,25 @@ const Dashboard = ({ history }) => {
 
   const destroyTask = async slug => {
     try {
-      await tasksApi.destroy(slug);
+      await tasksApi.destroy({ slug, quiet: true });
       await fetchTasks();
     } catch (error) {
       logger.error(error);
+    }
+  };
+
+  const handleProgressToggle = async ({ slug, progress }) => {
+    try {
+      await tasksApi.update({
+        slug,
+        payload: { progress },
+        quiet: true,
+      });
+      await fetchTasks();
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,7 +66,7 @@ const Dashboard = ({ history }) => {
     );
   }
 
-  if (either(isNil, isEmpty)(tasks)) {
+  if (all(either(isNil, isEmpty), [pendingTasks, completedTasks])) {
     return (
       <Container>
         <h1 className="my-5 text-center text-xl leading-5">
@@ -61,7 +80,22 @@ const Dashboard = ({ history }) => {
     <Container>
       <div className="flex flex-col gap-y-8">
         <PageTitle title="Todo list" />
-        <Table data={tasks} destroyTask={destroyTask} showTask={showTask} />
+        {!either(isNil, isEmpty)(pendingTasks) && (
+          <Table
+            data={pendingTasks}
+            destroyTask={destroyTask}
+            handleProgressToggle={handleProgressToggle}
+            showTask={showTask}
+          />
+        )}
+        {!either(isNil, isEmpty)(completedTasks) && (
+          <Table
+            data={completedTasks}
+            destroyTask={destroyTask}
+            handleProgressToggle={handleProgressToggle}
+            type="completed"
+          />
+        )}
       </div>
     </Container>
   );
