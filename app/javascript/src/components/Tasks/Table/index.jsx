@@ -3,11 +3,23 @@ import React from "react";
 import Header from "./Header";
 import Row from "./Row";
 
-const Table = ({ data, destroyTask, showTask }) => (
+const Table = ({
+  type = "pending",
+  data,
+  destroyTask,
+  showTask,
+  handleProgressToggle,
+}) => (
   <div className="inline-block min-w-full">
     <table className="min-w-full border-collapse border border-gray-300">
-      <Header />
-      <Row data={data} destroyTask={destroyTask} showTask={showTask} />
+      <Header type={type} />
+      <Row
+        data={data}
+        destroyTask={destroyTask}
+        handleProgressToggle={handleProgressToggle}
+        showTask={showTask}
+        type={type}
+      />
     </table>
   </div>
 );
