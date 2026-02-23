@@ -25,6 +25,11 @@ const Header = ({ type }) => {
           </th>
         )}
         {type === "pending" && (
+          <th className="border-b border-r border-gray-300 bg-gray-100 px-4 py-2.5 text-center text-xs font-bold uppercase leading-4 text-gray-800">
+            Comments
+          </th>
+        )}
+        {type === "pending" && (
           <th className="border-b border-gray-300 bg-gray-100 px-4 py-2.5 text-center text-xs font-bold uppercase leading-4 text-gray-800">
             Starred
           </th>
