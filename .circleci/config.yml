@@ -1,31 +1,56 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/reference/configuration-reference
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
+orbs:
+  # To install the required node version
+  node: circleci/node@5.0.3
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/guides/execution-managed/executor-intro/ & https://circleci.com/docs/reference/configuration-reference/#executor-job
+  build:
+    # No. of servers/machines
+    parallelism: 1
     docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
+      - image: cimg/ruby:3.3.5
+      - image: cimg/redis:5.0.14
+      - image: cimg/postgres:9.6
+        environment:
+          POSTGRES_HOST_AUTH_METHOD: trust
 
-    # Add steps to the job
-    # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#steps-overview & https://circleci.com/docs/reference/configuration-reference/#steps
+    #application directory change it with your application directory name
+    working_directory: ~/granite
+    environment:
+      TZ: "/usr/share/zoneinfo/America/New_York"
+      RAILS_ENV: "test"
+      RACK_ENV: "test"
+
     steps:
-      # Checkout the code as the first step.
       - checkout
+      - node/install:
+          install-yarn: true
+          node-version: "22.13"
+      - run: node --version
+      - run: gem install bundler:2.2.20
+      #install sqlite dependency
+      - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
+      # Bundle install
+      - run: bundle check --path=vendor/bundle || bundle install
+          --path=vendor/bundle --jobs=4 --retry=3
+      # Yarn install
+      - run: yarn install --cache-folder vendor/node_modules
+      # Ensure Rubocop has linted all Ruby files
+      - run: bundle exec rubocop
+      # Ensure Prettier+ESLint has been run on all JS files
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/guides/orchestrate/workflows/ & https://circleci.com/docs/reference/configuration-reference/#workflows
+          npx prettier "./app/javascript/src/**/*.{js,jsx,json}" && npx eslint
+          "./app/javascript/src/**/*.{js,jsx,json}"
+      # Setup database
+      - run: cp config/database.yml.ci config/database.yml
+      - run: bundle exec rails db:create db:schema:load --trace
+      # Generate assets
+      - run: yarn build
+      # Unit tests
+      - run:
+          shell: /bin/bash
+          command: bundle exec rake db:test:prepare && bundle exec rails t -v
 workflows:
-  say-hello-workflow: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  version: 2
+  commit:
     jobs:
-      - say-hello
+      - build
