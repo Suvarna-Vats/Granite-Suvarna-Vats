@@ -57,6 +57,9 @@ const Row = ({
               <td className="whitespace-no-wrap border-r border-gray-300 px-4 py-2.5 text-sm text-gray-800">
                 {rowData.assigned_user.name}
               </td>
+              <td className="whitespace-no-wrap border-r border-gray-300 px-4 py-2.5 text-center text-sm text-gray-800">
+                {rowData.comments_count}
+              </td>
               <td className="cursor-pointer px-4 py-2.5 text-center">
                 <button onClick={() => starTask(rowData.slug, rowData.status)}>
                   <i
