@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_23_054041) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_23_072627) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "task_id", null: false
@@ -22,6 +22,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_23_054041) do
   end
 
   create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.integer "task_id"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", force: :cascade do |t|

@@ -18,6 +18,7 @@ class Task < ApplicationRecord
   validates :slug, uniqueness: true
   validate :slug_not_changed
   before_create :set_slug
+  after_create :log_task_details
 
   private
 
@@ -50,5 +51,9 @@ class Task < ApplicationRecord
       if will_save_change_to_slug? && self.persisted?
         errors.add(:slug, I18n.t("task.slug.immutable"))
       end
+    end
+
+    def log_task_details
+      TaskLoggerJob.perform_async(self.id)
     end
 end

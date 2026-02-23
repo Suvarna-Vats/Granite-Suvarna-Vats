@@ -81,5 +81,8 @@ gem "data_migrate"
 gem "react-rails", "~> 2.7.1"
 gem "simplecov", require: false, group: :test
 
+gem "bundler-audit", require: false
 gem "minitest-bisect"
 gem "pundit"
+gem "ruby_audit", require: false
+gem "sidekiq", "~> 7.0"
