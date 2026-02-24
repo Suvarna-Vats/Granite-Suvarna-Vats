@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_23_072627) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_23_123738) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "task_id", null: false
@@ -31,6 +31,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_23_072627) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "preferences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "notification_delivery_hour"
+    t.boolean "should_receive_email", default: true, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_preferences_on_user_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.text "title", null: false
     t.datetime "created_at", null: false
@@ -42,6 +51,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_23_072627) do
     t.string "status", default: "unstarred", null: false
     t.integer "comments_count"
     t.index ["slug"], name: "index_tasks_on_slug", unique: true
+  end
+
+  create_table "user_notifications", force: :cascade do |t|
+    t.date "last_notification_sent_date", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "last_notification_sent_date"], name: "index_user_preferences_on_user_id_and_notification_sent_date", unique: true
+    t.index ["user_id"], name: "index_user_notifications_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -56,6 +74,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_23_072627) do
 
   add_foreign_key "comments", "tasks"
   add_foreign_key "comments", "users"
+  add_foreign_key "preferences", "users"
   add_foreign_key "tasks", "users", column: "assigned_user_id"
   add_foreign_key "tasks", "users", column: "task_owner_id", on_delete: :cascade
+  add_foreign_key "user_notifications", "users"
 end

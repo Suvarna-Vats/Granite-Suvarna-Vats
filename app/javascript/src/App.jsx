@@ -9,6 +9,8 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getFromLocalStorage } from "utils/storage";
 
+import Preferences from "./components/Preferences";
+
 const App = () => {
   const authToken = getFromLocalStorage("authToken");
   const isLoggedIn = !either(isNil, isEmpty)(authToken);
@@ -22,6 +24,7 @@ const App = () => {
         <Route exact component={CreateTask} path="/tasks/create" />
         <Route exact component={Signup} path="/signup" />
         <Route exact component={Login} path="/login" />
+        <Route exact component={Preferences} path="/my/preferences" />
         <PrivateRoute
           component={Dashboard}
           condition={isLoggedIn}

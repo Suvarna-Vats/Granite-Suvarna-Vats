@@ -1,0 +1,20 @@
+default: &default
+  todo_notifications_job:
+    cron: "0 * * * *"
+    class: "TodoNotificationsJob"
+    queue: "default"
+
+development:
+  todo_notifications_job:
+    cron: "* * * * *"
+    class: "TodoNotificationsJob"
+    queue: "default"
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

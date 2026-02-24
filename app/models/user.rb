@@ -6,9 +6,17 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   MAX_EMAIL_LENGTH = 255
 
-  has_many :assigned_tasks, foreign_key: :assigned_user_id, class_name: "Task"
-  has_many :created_tasks, foreign_key: :task_owner_id, class_name: "Task"
-  has_many :comments, dependent: :destroy
+  with_options class_name: "Task" do |user|
+    user.has_many :created_tasks, foreign_key: :task_owner_id
+    user.has_many :assigned_tasks, foreign_key: :assigned_user_id
+  end
+
+  with_options dependent: :destroy do |user|
+    user.has_many :comments
+    user.has_many :user_notifications, foreign_key: :user_id
+    user.has_one :preference, foreign_key: :user_id
+  end
+
   has_secure_password
   has_secure_token :authentication_token
   validates :name, presence: true, length: { maximum: MAX_NAME_LENGTH }
@@ -21,6 +29,7 @@ class User < ApplicationRecord
 
   before_destroy :assign_task_to_task_owner
   before_save :to_lowercase
+  before_create :build_default_preference
 
   private
 
@@ -33,5 +42,11 @@ class User < ApplicationRecord
       tasks_whose_owner_is_not_current_user.find_each do |task|
         task.update!(assigned_user_id: task.task_owner_id)
       end
+    end
+
+    def build_default_preference
+      self.preference = Preference.new(
+        notification_delivery_hour: Constants::DEFAULT_NOTIFICATION_DELIVERY_HOUR
+      )
     end
 end
