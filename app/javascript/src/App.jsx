@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import { getFromLocalStorage } from "utils/storage";
 
 import Preferences from "./components/Preferences";
+import DownloadReport from "./components/Tasks/DownloadReport";
 
 const App = () => {
   const authToken = getFromLocalStorage("authToken");
@@ -25,6 +26,7 @@ const App = () => {
         <Route exact component={Signup} path="/signup" />
         <Route exact component={Login} path="/login" />
         <Route exact component={Preferences} path="/my/preferences" />
+        <Route exact component={DownloadReport} path="/tasks/report" />;
         <PrivateRoute
           component={Dashboard}
           condition={isLoggedIn}

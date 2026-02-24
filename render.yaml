@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: granite-oliver-smith
+    runtime: ruby
+    repo: https://github.com/Suvarna-Vats/Granite-Suvarna-Vats
+    branch: main
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: granite-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+    buildCommand: ./bin/build_script
+    startCommand: bundle exec puma -C config/puma.rb
+
+databases:
+  - name: granite-db
+    databaseName: granite_prod_db
+    user: admin
+    plan: free
+    postgresMajorVersion: "13"
+
+version: "1"

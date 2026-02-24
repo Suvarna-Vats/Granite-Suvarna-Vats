@@ -82,10 +82,14 @@ gem "react-rails", "~> 2.7.1"
 gem "simplecov", require: false, group: :test
 
 gem "bundler-audit", require: false
+gem "google-cloud-storage"
 gem "letter_opener", group: :development
 gem "minitest-bisect"
+gem "pg", group: [:production]
 gem "pundit"
 gem "ruby_audit", require: false
 gem "secvault", "~> 3.1"
 gem "sidekiq", "~> 7.0"
 gem "sidekiq-cron"
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"

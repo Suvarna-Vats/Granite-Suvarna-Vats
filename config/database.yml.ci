@@ -1,19 +1,26 @@
+<% branch_name = `git symbolic-ref HEAD 2>/dev/null`.chomp.sub('refs/heads/', '') %>
+<% repository_name = `git rev-parse --show-toplevel`.split('/').last.strip %>
+
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['PG_HOST'] %>
+  pool: 5
+  username: <%= ENV['PG_USER'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: <%= "#{repository_name}_development" %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: granite_test<%= ENV['CIRCLE_NODE_INDEX'] %>
+  database: <%= "#{repository_name}_test" %>
+
+staging:
+  <<: *default
+  database: <%= "#{repository_name}_staging" %>
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: <%= "#{repository_name}_production" %>
