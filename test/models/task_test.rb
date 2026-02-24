@@ -39,7 +39,7 @@ class TaskTest < ActiveSupport::TestCase
 
   def test_exception_raised
     assert_raises ActiveRecord::RecordNotFound do
-      Task.find(SecureRandom.uuid)
+      Task.find(0)
     end
   end
 

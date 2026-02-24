@@ -10,6 +10,7 @@ en:
   successfully_deleted: "%{entity} was successfully deleted!"
   not_found: "Couldn't find %{entity}"
   task:
+    not_found: "Couldn't find Task"
     slug:
       immutable: "is immutable!"
   preference:
