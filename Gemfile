@@ -44,7 +44,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Pin minitest to < 6.0 due to Rails 8.0 compatibility issue
-  gem "minitest", "< 6.0"
+  gem "minitest", "< 7.0"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false

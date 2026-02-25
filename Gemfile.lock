@@ -246,13 +246,15 @@ GEM
       net-smtp
     marcel (1.1.0)
     mini_mime (1.1.5)
-    minitest (5.27.0)
+    minitest (6.0.2)
+      drb (~> 2.0)
+      prism (~> 1.5)
     minitest-bisect (1.8.0)
       minitest-server (~> 1.0)
       path_expander (~> 2.0)
-    minitest-server (1.0.10)
+    minitest-server (1.0.9)
       drb (~> 2.0)
-      minitest (~> 5.16)
+      minitest (> 5.16)
     msgpack (1.8.0)
     multi_json (1.19.1)
     net-http (0.9.1)
@@ -548,7 +550,7 @@ DEPENDENCIES
   jsbundling-rails
   kamal
   letter_opener
-  minitest (< 6.0)
+  minitest (< 7.0)
   minitest-bisect
   pg
   puma (>= 5.0)
@@ -660,9 +662,9 @@ CHECKSUMS
   mail (2.9.0) sha256=6fa6673ecd71c60c2d996260f9ee3dd387d4673b8169b502134659ece6d34941
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
-  minitest (5.27.0) sha256=2d3b17f8a36fe7801c1adcffdbc38233b938eb0b4966e97a6739055a45fa77d5
+  minitest (6.0.2) sha256=db6e57956f6ecc6134683b4c87467d6dd792323c7f0eea7b93f66bd284adbc3d
   minitest-bisect (1.8.0) sha256=0169e2d6e0cc2fe3d7c3b6d9f48331dbfa89f556a6d42594f971868346e95fdb
-  minitest-server (1.0.10) sha256=275439bf3ffc433fcbe161733248f1d9749ebf122892cf010bf864aaa95cef75
+  minitest-server (1.0.9) sha256=dea8bf634fcc560c6534802d45b856bf723b5cf4f7f62180c1735e9e136db452
   msgpack (1.8.0) sha256=e64ce0212000d016809f5048b48eb3a65ffb169db22238fb4b72472fecb2d732
   multi_json (1.19.1) sha256=7aefeff8f2c854bf739931a238e4aea64592845e0c0395c8a7d2eea7fdd631b7
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
