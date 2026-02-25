@@ -89,7 +89,7 @@ gem "pg", group: [:production]
 gem "pundit"
 gem "ruby_audit", require: false
 gem "secvault", "~> 3.1"
-gem "sidekiq", "~> 7.0"
+gem "sidekiq", "~> 8.0"
 gem "sidekiq-cron"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
