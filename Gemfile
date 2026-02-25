@@ -78,7 +78,7 @@ end
 gem "bcrypt", "~> 3.1.13"
 gem "connection_pool", "~> 2.4"
 gem "data_migrate"
-gem "react-rails", "~> 2.7.1"
+gem "react-rails", "~> 3.2.1"
 gem "simplecov", require: false, group: :test
 
 gem "bundler-audit", require: false
